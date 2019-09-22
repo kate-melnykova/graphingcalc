@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Scientific computations{% endblock %}
+
+{% block content %}
+<h1 id="history" align="center">Graphing calculator</h1>
+
+<fieldset>
+    <legend>Enter the formula</legend>
+    <form id="calc" action="./graph_request" method="POST">
+    <p>
+        f(x)=<input type="text" name="expression" required/>
+    </p>
+    <p>
+    From x=<input type="number" name="xmin" required/>
+        to x=<input type="number" name="xmax" required/>
+        <input type="submit" name="submit" value="submit">
+        <span id="result"></span>
+    </p>
+    </form>
+</fieldset>
+{% endblock %}
+
+{% block history %}
+<h1> History </h1>
+<img src="/static/plt.eps">
+{% endblock %}
