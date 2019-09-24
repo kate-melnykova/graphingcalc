@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+import os
+
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, send_from_directory
 from flask_login import LoginManager, UserMixin, login_required,\
     login_user, logout_user, current_user
 import json
@@ -11,6 +13,7 @@ from views.graphing import plot_function
 from redispy import get_connection
 from views.auth import User
 from views.auth.login_form import auth
+from views.exceptions import *
 
 app, celery = factory_app()
 
@@ -41,14 +44,15 @@ def index():
 
 @app.route('/schedule_calculation', methods=['POST'])
 def schedule_calculation():
-    expression = request.form['expression']
-    print(expression)
-    rpn_list = rpn(expression)
-    val = compute_rpn(rpn_list)
-    flash(f'{expression}')
-    flash(f'{val}')
-    #return redirect(url_for('index'))
-    #return render_template('index.html')
+    try:
+        expression = request.form['expression']
+        print(expression)
+        rpn_list = rpn(expression)
+        val = compute_rpn(rpn_list)
+        flash(f'{expression}')
+        flash(f'{val}')
+    except BaseApp as e:
+        return jsonify({'error': e.message}), 500
     return jsonify({'val': str(val), 'expression': expression}), 200
 
 
@@ -56,8 +60,10 @@ def schedule_calculation():
 def graph_request():
     expression = request.form['expression']
     print(expression)
+    filename = 'plt.png'
     plot_function(expression, 0, 1)
-    return redirect(url_for('graph'))
+    return send_from_directory(os.path.join(os.getcwd(), 'media'), filename, as_attachment=False)
+
 
 @app.route('/graph')
 def graph():

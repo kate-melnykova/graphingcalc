@@ -14,7 +14,7 @@ from views.exceptions import *
 from views.convert_to_rpn import rpn
 from views.implement_rpn import compute_rpn
 
-filepath = 'templates/'
+filepath = 'media/'
 
 variable_name = 'x'
 settings = {
@@ -34,15 +34,22 @@ def implementable_function(s: str):
         variable = 't'
     else:
         raise UnknownVarNameError
+    print(f'Variable is {variable}')
 
-    return lambda var: [elem if elem != variable else var for elem in s], variable
+    def func(var):
+        plug_var = [elem if elem != variable else var for elem in s]
+        print(plug_var)
+        return compute_rpn(plug_var)
+
+    return func
 
 
 def plot_function(s: str, xmin: int or float, xmax: int or float, npoints=1000, settings=settings):
     assert npoints > 0
     assert xmin < xmax
     func_val = []
-    func, var_name = implementable_function(s)
+    s = rpn(s, function=True)
+    func = lambda var: compute_rpn([elem if elem != 'x' else Decimal(var) for elem in s])
     stepsize = (xmax - xmin) / npoints
     xvals = []
     for i in range(npoints):
@@ -50,12 +57,13 @@ def plot_function(s: str, xmin: int or float, xmax: int or float, npoints=1000, 
         xvals.append(val)
         func_val.append(func(val))
 
+    print(xvals, func_val)
     plt.figure(figsize=settings['figsize'])
     plt.plot(xvals, func_val)
     plt.title(settings['title'])
     plt.xlabel(settings['xlabel'])
-    plt.savefig(os.path.join(filepath, 'plt.eps'))
-    plt.show()
+    plt.savefig(os.path.join(filepath, 'plt.png'))
+    # plt.show()
 
 
 

@@ -9,25 +9,24 @@ from views.parameters import *
 from views.exceptions import *
 
 
-def preprocess(s: str) -> List[str]:
+def preprocess(s: str, function=False) -> List[str]:
     s.replace(',', ' ')
     for idx, name in enumerate(names):
         s = s.replace(name, f' _f{idx} ')
+    if function:
+        s = s.replace('x', ' x ')
     return s.split()
 
 
 def rpn(string: str or List[str], function=False):
     if isinstance(string, str):
-        string = preprocess(string)
+        string = preprocess(string, function)
     output = []
     op_queue = []
     token = None
     
     print(string)
     variable = 'x'
-    if function:
-        if 't' in string:
-            variable = 't'
     
     while string:
         prev_token = token

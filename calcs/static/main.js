@@ -30,10 +30,30 @@ $(document).ready(function() {
                 window.counter += 1;
             })
 
-            .fail(function (data) {
-                $('#result').html('Please double-check the expression');
+            .fail(function (jqXHR, data, arg3) {
+                $('#result').html(jqXHR.responseJSON.error);
+                console.log(data);
+                console.log(arg3);
             });
 
         e.preventDefault();
     });
+
+
+    $('form#graph').submit(function (e) {
+        var that = $(this);
+        $.ajax({
+            type: 'POST',
+            url: that.attr('action'),
+            data: that.serialize()
+        })
+
+            .done(function (data) {
+                $('#graph-container').empty();
+                $('<img>', {src:"http://0.0.0.0:5000/media/plt.png"}).appendTo('#graph-container');
+            })
+
+        e.preventDefault();
+    });
+
 });

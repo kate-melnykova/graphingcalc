@@ -7,7 +7,7 @@
 
 <fieldset>
     <legend>Enter the formula</legend>
-    <form id="calc" action="./graph_request" method="POST">
+    <form id="graph" action="./graph_request" method="POST">
     <p>
         f(x)=<input type="text" name="expression" required/>
     </p>
@@ -23,5 +23,7 @@
 
 {% block history %}
 <h1> History </h1>
-<img src="/static/plt.eps">
+<div id="graph-container">
+
+</div>
 {% endblock %}
