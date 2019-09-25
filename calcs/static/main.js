@@ -50,7 +50,7 @@ $(document).ready(function() {
 
             .done(function (data) {
                 $('#graph-container').empty();
-                $('<img>', {src:"http://0.0.0.0:5000/media/plt.png"}).appendTo('#graph-container');
+                $('<img>', {src:"http://0.0.0.0:5000/media/plt2.png"}).appendTo('#graph-container');
             })
 
         e.preventDefault();

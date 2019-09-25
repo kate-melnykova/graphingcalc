@@ -14,7 +14,7 @@ from views.exceptions import *
 from views.convert_to_rpn import rpn
 from views.implement_rpn import compute_rpn
 
-filepath = 'media/'
+filepath = '/media/'
 
 variable_name = 'x'
 settings = {
@@ -44,7 +44,7 @@ def implementable_function(s: str):
     return func
 
 
-def plot_function(s: str, xmin: int or float, xmax: int or float, npoints=1000, settings=settings):
+def plot_function(s: str, xmin: int or float, xmax: int or float, npoints=10, settings=settings):
     assert npoints > 0
     assert xmin < xmax
     func_val = []
@@ -62,7 +62,7 @@ def plot_function(s: str, xmin: int or float, xmax: int or float, npoints=1000, 
     plt.plot(xvals, func_val)
     plt.title(settings['title'])
     plt.xlabel(settings['xlabel'])
-    plt.savefig(os.path.join(filepath, 'plt.png'))
+    plt.savefig(os.getcwd() + filepath + 'plt2.png')
     # plt.show()
 
 

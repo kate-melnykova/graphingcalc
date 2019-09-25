@@ -1,6 +1,7 @@
 import os
 
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, send_from_directory
+from flask import Flask, render_template, request, redirect,\
+    url_for, flash, jsonify, send_from_directory, send_file
 from flask_login import LoginManager, UserMixin, login_required,\
     login_user, logout_user, current_user
 import json
@@ -59,10 +60,13 @@ def schedule_calculation():
 @app.route('/graph_request', methods=['POST'])
 def graph_request():
     expression = request.form['expression']
+    xmin = float(request.form['xmin'])
+    xmax = float(request.form['xmax'])
     print(expression)
-    filename = 'plt.png'
-    plot_function(expression, 0, 1)
-    return send_from_directory(os.path.join(os.getcwd(), 'media'), filename, as_attachment=False)
+    filename = 'plt2.png'
+    plot_function(expression, xmin, xmax)
+    print(os.getcwd() + '/media/'+ filename)
+    return send_file(os.getcwd() + '/media/' + filename, as_attachment=True)
 
 
 @app.route('/graph')
