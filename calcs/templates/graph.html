@@ -6,17 +6,42 @@
 <h1 id="history" align="center">Graphing calculator</h1>
 
 <fieldset>
-    <legend>Enter the formula</legend>
-    <form id="graph" action="./graph_request" method="POST">
+    <legend>Enter figure parameters</legend>
+    <form id="graph">
     <p>
-        f(x)=<input type="text" name="expression" required/>
+        f(x)=<input type="text" name="expression" size="100" required/>
     </p>
     <p>
     From x=<input type="number" name="xmin" required/>
         to x=<input type="number" name="xmax" required/>
-        <input type="submit" name="submit" value="submit">
-        <span id="result"></span>
     </p>
+    <p>Options (Optional)</p>
+    <table>
+        <tr>
+            <th> Labels </th>
+            <th> Properties</th>
+        </tr>
+        <tr>
+            <td> Title <input type="text" name="title"></td>
+            <td> Include grid? <input type="checkbox" name="grid" value="gridon"> </td>
+        </tr>
+        <tr>
+            <td> x label <input type="text" name="xlabel"></td>
+            <td> Line color: <select>
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+                <option value="black">Black</option>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td> y label <input type="text" name="ylabel"></td>
+            <td> Line width: To be added</td>
+        </tr>
+    </table>
+    <p></p>
+    <input type="submit" name="submit" value="submit">
+    <span id="result"></span>
     </form>
 </fieldset>
 {% endblock %}

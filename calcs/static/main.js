@@ -41,17 +41,9 @@ $(document).ready(function() {
 
 
     $('form#graph').submit(function (e) {
-        var that = $(this);
-        $.ajax({
-            type: 'POST',
-            url: that.attr('action'),
-            data: that.serialize()
-        })
-
-            .done(function (data) {
-                $('#graph-container').empty();
-                $('<img>', {src:"http://0.0.0.0:5000/media/plt2.png"}).appendTo('#graph-container');
-            })
+        var queryString = $(this).serialize();
+        $('#graph-container').empty();
+        $('<img>', {src:"http://0.0.0.0:5000/graph_request?"+queryString}).appendTo('#graph-container');
 
         e.preventDefault();
     });

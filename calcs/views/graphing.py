@@ -44,7 +44,9 @@ def implementable_function(s: str):
     return func
 
 
-def plot_function(s: str, xmin: int or float, xmax: int or float, npoints=10, settings=settings):
+def plot_function(s: str, xmin: str, xmax: str, npoints=1000, settings=settings):
+    xmin = float(xmin)
+    xmax = float(xmax)
     assert npoints > 0
     assert xmin < xmax
     func_val = []

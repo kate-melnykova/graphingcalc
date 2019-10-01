@@ -57,16 +57,16 @@ def schedule_calculation():
     return jsonify({'val': str(val), 'expression': expression}), 200
 
 
-@app.route('/graph_request', methods=['POST'])
+@app.route('/graph_request', methods=['GET', 'POST'])
 def graph_request():
-    expression = request.form['expression']
-    xmin = float(request.form['xmin'])
-    xmax = float(request.form['xmax'])
+    expression = request.args.get('expression')
+    xmin = request.args.get('xmin')
+    xmax = request.args.get('xmax')
     print(expression)
     filename = 'plt2.png'
     plot_function(expression, xmin, xmax)
     print(os.getcwd() + '/media/'+ filename)
-    return send_file(os.getcwd() + '/media/' + filename, as_attachment=True)
+    return send_file(os.getcwd() + '/media/' + filename, as_attachment=False)
 
 
 @app.route('/graph')
