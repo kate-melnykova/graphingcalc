@@ -21,6 +21,8 @@ settings = {
     'figsize': (6, 6),
     'title': 'y=f(x)',
     'xlabel': f'Variable x',
+    'ylabel': None,
+    'label': None
 }
 
 
@@ -44,7 +46,7 @@ def implementable_function(s: str):
     return func
 
 
-def plot_function(s: str, xmin: str, xmax: str, npoints=1000, settings=settings):
+def plot_function(s: str, xmin: str, xmax: str, npoints=1000, params={}):
     xmin = float(xmin)
     xmax = float(xmax)
     assert npoints > 0
@@ -59,7 +61,6 @@ def plot_function(s: str, xmin: str, xmax: str, npoints=1000, settings=settings)
         xvals.append(val)
         func_val.append(func(val))
 
-    print(xvals, func_val)
     plt.figure(figsize=settings['figsize'])
     plt.plot(xvals, func_val)
     plt.title(settings['title'])

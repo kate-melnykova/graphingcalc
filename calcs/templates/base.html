@@ -13,7 +13,19 @@
 
     <div class="topnav">
         <a href="./">Enter input</a>
+        <a href="./graph">Plot a function</a>
         <a href="./view_results">View results</a>
+    </div>
+    <div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+{% endwith %}
     </div>
     <div class="content">
         {% block content %}
@@ -26,7 +38,7 @@
     </div>
 
     <div class="footer" id="end">
-        Created in September 2019
+        Created in October 2020
     </div>
   </body>
 </html>

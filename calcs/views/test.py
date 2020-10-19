@@ -1,4 +1,5 @@
 from decimal import Decimal
+import math
 import unittest
 from unittest import TestCase
 
@@ -9,7 +10,7 @@ from implement_rpn import compute_rpn
 
 class Test_convertion_to_rpn(TestCase):
     def test_spaces(self):
-        self.assertListEqual(preprocess('2 +3'), ['2', f'_f{names.index("+")}','3'])
+        self.assertListEqual(preprocess('2 +3'), ['2', f'+','3'])
         self.assertListEqual(preprocess('4 - 8'), ['4',f'_f{names.index("-")}','8'])
         self.assertListEqual(preprocess('5  *   3'), ['5', f'_f{names.index("*")}', '3'])
         self.assertListEqual(preprocess(' 6/4'), ['6',f'_f{names.index("/")}','4'])

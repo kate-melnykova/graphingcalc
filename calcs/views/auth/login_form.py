@@ -10,16 +10,17 @@ from flask import request
 from flask import url_for
 from flask_login import login_user, login_required, logout_user, current_user
 from redis import Redis
+from flask_wtf import FlaskForm
 from wtforms import Form
 from wtforms import StringField
-from wtforms import PasswordField
+from wtforms import PasswordField, SubmitField
 from wtforms import validators
 
 from views.auth import User
 from redispy import get_connection
 
 
-class RegistrationForm(Form):
+class RegistrationForm(FlaskForm):
     username = StringField('Username', [validators.Length(min=4, max=25)])
     email = StringField('Email Address', [validators.Length(min=6, max=35)])
     password = PasswordField('New Password', [
@@ -28,11 +29,13 @@ class RegistrationForm(Form):
     ])
     confirm = PasswordField('Repeat Password')
     # accept_tos = BooleanField('I accept the TOS', [validators.DataRequired()])
+    submit = SubmitField()
 
 
-class LoginForm(Form):
+class LoginForm(FlaskForm):
     username = StringField('Username', [validators.Length(min=4, max=25)])
     password = PasswordField('Password', [validators.Length(min=6, max=35)])
+    submit = SubmitField()
 
 
 def generate_error_message(form_errors):
@@ -50,16 +53,16 @@ auth = Blueprint('auth', __name__)
 def register():
     regform = RegistrationForm(request.form)
     loginform = LoginForm(request.form)
-    return render_template('register.html', regform=regform, loginform=loginform)
+    return render_template('login.html', regform=regform, loginform=loginform)
 
 
 @auth.route('/registration/process', methods=['POST'])
 def registration_process():
-    assert request.method == 'POST'
     regform = RegistrationForm(request.form)
     if regform.validate():
         username = regform.username.data
-        user = User(username=username, password=regform.password.data, email=regform.email.data)
+        user = User(username=username, password=regform.password.data,
+                    email=regform.email.data)
         connection = get_connection(db=current_app.config['USER_DB'])
         if connection.get(username) is None:
             user_db = user.serialize()
@@ -77,7 +80,6 @@ def registration_process():
 
 @auth.route('/login/process', methods=['POST'])
 def login_process():
-    assert request.method == 'POST'
     loginform = LoginForm(request.form)
     if loginform.validate():
         username = loginform.username.data
