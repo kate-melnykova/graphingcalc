@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, redirect,\
     url_for, flash, jsonify, send_from_directory, send_file
 from flask_login import LoginManager, UserMixin, login_required,\
     login_user, logout_user, current_user
-import flask_bootstrap
+# import flask_bootstrap
 from flask_wtf import FlaskForm
 import json
 from redis import Redis
@@ -59,17 +59,29 @@ def schedule_calculation():
     return jsonify({'val': str(val), 'expression': expression}), 200
 
 
-plot_parameters = ['title', 'xlabel', 'ylabel', 'linecolor', 'isgrid']
+default_plot_parameters = {'title': None,
+                           'xlabel': None,
+                           'ylabel': None,
+                           'linecolor': 'b',
+                           'isgrid': False,
+                           'filename': 'plot.png'
+                           }
 
 
 @app.route('/graph_request', methods=['GET', 'POST'])
 def graph_request():
     expression = request.args.get('expression')
-    xmin = request.args.get('xmin')
-    xmax = request.args.get('xmax')
-    params = {p: request.args.get(p) for p in plot_parameters}
-    print(expression)
-    filename = 'plt2.png'
+    # add try-except
+    xmin = float(request.args.get('xmin'))
+    xmax = float(request.args.get('xmax'))
+
+    # read all plot properties
+    params = dict(default_plot_parameters)
+    for p in default_plot_parameters:
+        if request.args.get(p, None):
+            params[p] = request.args[p]
+
+    filename = params['filename']
     plot_function(expression, xmin, xmax, params=params)
     print(os.getcwd() + '/media/' + filename)
     return send_file(os.getcwd() + '/media/' + filename, as_attachment=False)

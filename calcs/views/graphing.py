@@ -50,7 +50,7 @@ def plot_function(s: str, xmin: str, xmax: str, npoints=1000, params={}):
     xmin = float(xmin)
     xmax = float(xmax)
     assert npoints > 0
-    assert xmin < xmax
+    assert xmin < xmax # TODO: add to validators
     func_val = []
     s = rpn(s, function=True)
     func = lambda var: compute_rpn([elem if elem != 'x' else Decimal(var) for elem in s])
@@ -62,10 +62,14 @@ def plot_function(s: str, xmin: str, xmax: str, npoints=1000, params={}):
         func_val.append(func(val))
 
     plt.figure(figsize=settings['figsize'])
-    plt.plot(xvals, func_val)
-    plt.title(settings['title'])
-    plt.xlabel(settings['xlabel'])
-    plt.savefig(os.getcwd() + filepath + 'plt2.png')
+    plt.plot(xvals, func_val, color=params['linecolor'])
+    plt.title(params['title'])
+    plt.xlabel(params['xlabel'])
+    plt.ylabel(params['ylabel'])
+    if params['isgrid']:
+        plt.grid(b=True)
+
+    plt.savefig(os.getcwd() + filepath + params['filename'])
     # plt.show()
 
 
