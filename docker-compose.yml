@@ -27,6 +27,7 @@ services:
       - redis
       - rabbitmq
       - celery-worker
+      - sqlserver
 
   celery-worker:
     <<: *web
@@ -36,6 +37,15 @@ services:
     depends_on:
       - redis
       - rabbitmq
+
+
+  sqlserver:
+    image: nouchka/sqlite3:latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password_01
+    ports:
+      - "1433:1433"
 
 volumes:
   pgdata:
