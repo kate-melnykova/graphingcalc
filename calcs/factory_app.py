@@ -1,6 +1,7 @@
 from celery import Celery
 from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
+from flask_migrate import Migrate
 
 
 def page_not_found(e):
@@ -24,6 +25,11 @@ def factory_app():
     app.register_error_handler(401, unautharized)
 
     Bootstrap(app)
+
+    from model import db
+    db.init_app(app)
+    migrate = Migrate(app, db)
+
     celery = Celery(app.name)
     celery.set_default()
     celery.conf.update(app.config)
