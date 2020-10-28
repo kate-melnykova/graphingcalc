@@ -10,12 +10,13 @@ import json
 from redis import Redis
 
 from factory_app import factory_app
+from model import db, User
 from views.convert_to_rpn import rpn, preprocess
 from views.implement_rpn import compute_rpn
 from views.graphing import plot_function
 from redispy import get_connection
 from views.graphing_setting import default_plot_parameters
-from views.auth import User
+# from views.auth import User
 from views.auth.login_form import auth
 from views.exceptions import *
 
@@ -29,12 +30,17 @@ login_manager.init_app(app)
 
 
 @login_manager.user_loader
-def user_loader(username):
-    user_db = get_connection(db=app.config['USER_DB']).get(username)
-    if user_db is not None:
-        return User.deserialize(user_db)
-    else:
-        return None
+def load_user(user_id):
+    print(user_id)
+    """Check if user is logged-in on every page load."""
+    return None if user_id is None else User.query.get(user_id)
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    """Redirect unauthorized users to Login page."""
+    flash('You must be logged in to view that page.')
+    return redirect(url_for('auth.login'))
 
 
 app.register_blueprint(auth)

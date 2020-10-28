@@ -15,6 +15,11 @@
         <a href="./">Enter input</a>
         <a href="./graph">Plot a function</a>
         <a href="./view_results">View results</a>
+        {% if current_user.is_authenticated %}
+            <a href="./login">Login</a>
+        {% else %}
+            <a href="./logout">Logout</a>
+        {% endif %}
     </div>
     <div>
         {% with messages = get_flashed_messages(with_categories=true) %}

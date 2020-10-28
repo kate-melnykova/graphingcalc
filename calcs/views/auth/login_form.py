@@ -86,19 +86,21 @@ def login_process():
 
     username = loginform.username.data
     # validate that there is such user
-    user = User.query.filter_by(username=username)
-    if user is None:
+    users = User.query.filter_by(username=username).limit(1).all()
+    if not users:
         flash(f"""The username does not exist: \n""" + generate_error_message(loginform.errors))
         return redirect(url_for('auth.register'))
 
-    if user.verify_password(loginform.password.data):
-        user.last_login = datetime.datetime.now()
-        db.session.commit()
-        login_user(user, remember=True)
-        return redirect(url_for('index'))
-    else:
-        flash(f"""Incorrect password \n""" + generate_error_message(loginform.errors))
-        return redirect(url_for('auth.register'))
+    for user in users:
+        if user.verify_password(loginform.password.data):
+            user.last_login = datetime.datetime.now()
+            db.session.add(user)
+            db.session.commit()
+            login_user(user, remember=True)
+            return redirect(url_for('index'))
+
+    flash(f"""Incorrect password \n""" + generate_error_message(loginform.errors))
+    return redirect(url_for('auth.register'))
 
 
 @auth.route("/logout")
