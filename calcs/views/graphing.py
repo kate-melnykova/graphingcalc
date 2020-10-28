@@ -13,17 +13,11 @@ from views.parameters import *
 from views.exceptions import *
 from views.convert_to_rpn import rpn
 from views.implement_rpn import compute_rpn
+from views.graphing_setting import SettingAxes, SettingLine
 
 filepath = '/media/'
 
 variable_name = 'x'
-settings = {
-    'figsize': (6, 6),
-    'title': 'y=f(x)',
-    'xlabel': f'Variable x',
-    'ylabel': None,
-    'label': None
-}
 
 
 def implementable_function(s: str):
@@ -46,7 +40,7 @@ def implementable_function(s: str):
     return func
 
 
-def plot_function(s: str, xmin: str, xmax: str, npoints=1000, params={}):
+def plot_function(s: str, xmin: str, xmax: str, npoints=1000, raw_data={}):
     xmin = float(xmin)
     xmax = float(xmax)
     assert npoints > 0
@@ -61,16 +55,13 @@ def plot_function(s: str, xmin: str, xmax: str, npoints=1000, params={}):
         xvals.append(val)
         func_val.append(func(val))
 
-    plt.figure(figsize=settings['figsize'])
-    plt.plot(xvals, func_val, color=params['linecolor'])
-    plt.title(params['title'])
-    plt.xlabel(params['xlabel'])
-    plt.ylabel(params['ylabel'])
-    if params['isgrid']:
-        plt.grid(b=True)
+    fig = SettingAxes.make_plot(raw_data)
+    SettingLine.plot(fig, func_val, xmin, xmax, raw_data)
+    #plt.plot(xvals, func_val, color=params['linecolor'])
 
-    plt.savefig(os.getcwd() + filepath + params['filename'])
+    plt.savefig(os.getcwd() + filepath + 'plot.png')
     # plt.show()
+
 
 
 

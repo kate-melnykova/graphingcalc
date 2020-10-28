@@ -105,3 +105,7 @@ venv.bak/
 
 # IDE
 .idea
+
+# produced plots
+calcs/media/*
+/media/*

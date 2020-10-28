@@ -14,6 +14,7 @@ from views.convert_to_rpn import rpn, preprocess
 from views.implement_rpn import compute_rpn
 from views.graphing import plot_function
 from redispy import get_connection
+from views.graphing_setting import default_plot_parameters
 from views.auth import User
 from views.auth.login_form import auth
 from views.exceptions import *
@@ -59,15 +60,6 @@ def schedule_calculation():
     return jsonify({'val': str(val), 'expression': expression}), 200
 
 
-default_plot_parameters = {'title': None,
-                           'xlabel': None,
-                           'ylabel': None,
-                           'linecolor': 'b',
-                           'isgrid': False,
-                           'filename': 'plot.png'
-                           }
-
-
 @app.route('/graph_request', methods=['GET', 'POST'])
 def graph_request():
     expression = request.args.get('expression')
@@ -75,14 +67,8 @@ def graph_request():
     xmin = float(request.args.get('xmin'))
     xmax = float(request.args.get('xmax'))
 
-    # read all plot properties
-    params = dict(default_plot_parameters)
-    for p in default_plot_parameters:
-        if request.args.get(p, None):
-            params[p] = request.args[p]
-
-    filename = params['filename']
-    plot_function(expression, xmin, xmax, params=params)
+    filename = 'plot.png'
+    plot_function(expression, xmin, xmax, raw_data=request.args)
     print(os.getcwd() + '/media/' + filename)
     return send_file(os.getcwd() + '/media/' + filename, as_attachment=False)
 
