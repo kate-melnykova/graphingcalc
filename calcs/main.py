@@ -82,3 +82,9 @@ def graph_request():
 @app.route('/graph')
 def graph():
     return render_template('graph.html')
+
+
+@app.route('/settings')
+@login_required
+def settings():
+    return render_template('settings.html')
