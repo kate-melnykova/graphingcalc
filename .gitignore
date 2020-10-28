@@ -109,3 +109,6 @@ venv.bak/
 # produced plots
 calcs/media/*
 /media/*
+
+calcs/*.db
+*.db
