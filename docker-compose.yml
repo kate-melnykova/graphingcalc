@@ -6,12 +6,20 @@ services:
     image: bitnami/redis:latest
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      graphingcalc_network:
+        aliases:
+          - redis
 
   rabbitmq:
     image: "rabbitmq:3-management"
     environment:
       RABBITMQ_DEFAULT_USER: "guest"
       RABBITMQ_DEFAULT_PASS: "guest"
+    networks:
+      graphingcalc_network:
+        aliases:
+          - rabbitmq
 
   web: &web
     build: .
@@ -27,7 +35,11 @@ services:
       - redis
       - rabbitmq
       - celery-worker
-      - sqlserver
+      - SQLdb
+    networks:
+      graphingcalc_network:
+        aliases:
+          - web
 
   celery-worker:
     <<: *web
@@ -37,15 +49,24 @@ services:
     depends_on:
       - redis
       - rabbitmq
+    networks:
+      graphingcalc_network:
+        aliases:
+          - celery-worker
 
-
-  sqlserver:
-    image: nouchka/sqlite3:latest
-    environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=Password_01
+  SQLdb:
+    image: postgres
+    restart: always
     ports:
-      - "1433:1433"
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: graphingcalc
+    networks:
+      graphingcalc_network:
+        aliases:
+          - postgres
 
-volumes:
-  pgdata:
+networks:
+  graphingcalc_network:
+

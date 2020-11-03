@@ -25,10 +25,3 @@ class User(UserMixin, db.Model):
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
-
-
-if __name__ == "__main__":
-    # Run this file directly to create the database tables.
-    print("Creating database tables...")
-    db.create_all()
-    print("Done!")

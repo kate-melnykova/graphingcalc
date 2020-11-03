@@ -55,6 +55,7 @@ def plot_function(s: str, xmin: str, xmax: str, npoints=1000, raw_data={}):
         xvals.append(val)
         func_val.append(func(val))
 
+    # fig = plt.figure()
     fig = SettingAxes.make_plot(raw_data)
     SettingLine.plot(fig, func_val, xmin, xmax, raw_data)
     #plt.plot(xvals, func_val, color=params['linecolor'])

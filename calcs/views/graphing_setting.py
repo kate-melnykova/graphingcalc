@@ -116,7 +116,7 @@ class SettingLine:
 
         if linewidth <= 0:
             warnings.append(f'The linewidth is not positive: {linewidth}. Resetting to the default value')
-            linewidth = 2
+            linewidth = 2.0
         return linewidth
 
     @classmethod
