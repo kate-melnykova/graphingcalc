@@ -4,12 +4,12 @@
 
 {% block content %}
 <h1 id="history" align="center">Graphing calculator</h1>
-
+<div>
 <fieldset>
     <legend>Enter figure parameters</legend>
     <form id="graph">
     <p>
-        f(x)=<input type="text" name="expression" size="100" required/>
+        f(x)=<input type="text" name="expression" style="width:80%" required/>
     </p>
     <p>
     From x=<input type="number" name="xmin" required/>
@@ -61,6 +61,7 @@
     <span id="result"></span>
     </form>
 </fieldset>
+</div>
 {% endblock %}
 
 {% block history %}
