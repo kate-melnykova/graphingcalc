@@ -2,15 +2,15 @@
 
 {% block title %}Scientific computations{% endblock %}
 
-{% block content %}
+{% block main %}
     <div>
 <h1 id="history" align="center">Online calculator</h1>
 
 <fieldset>
-    <legend>Enter the formula</legend>
     <form id="calc" action="./schedule_calculation" method="POST">
-        <input type="text" name="expression" required/>
-        <input type="submit" name="submit" value="submit">
+        <p>{{ form.expression.label }}</p>
+        <p> {{ form.expression() }}</p>
+        <p> {{ form.submit() }}</p>
         <span id="result"></span>
 
     </form>

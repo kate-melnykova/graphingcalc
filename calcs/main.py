@@ -9,6 +9,7 @@ from flask_wtf import FlaskForm
 import json
 from redis import Redis
 
+from views.forms import GraphingForm, ComputeForm
 from factory_app import factory_app
 from model import db, User
 from views.convert_to_rpn import rpn, preprocess
@@ -46,10 +47,12 @@ def unauthorized():
 app.register_blueprint(auth)
 
 
-@app.route('/', methods=['GET'])
-@app.route('/index', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    if request.method == 'GET':
+        return render_template('index.html',
+                               form=ComputeForm())
 
 
 @app.route('/schedule_calculation', methods=['POST'])
@@ -81,7 +84,7 @@ def graph_request():
 
 @app.route('/graph')
 def graph():
-    return render_template('graph.html')
+    return render_template('graph.html', form=GraphingForm())
 
 
 @app.route('/settings')

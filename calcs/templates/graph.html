@@ -1,19 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %}Scientific computations{% endblock %}
-
-{% block content %}
+{% block main %}
 <h1 id="history" align="center">Graphing calculator</h1>
 <div>
 <fieldset>
     <legend>Enter figure parameters</legend>
-    <form id="graph">
+    <form id="graph" method="POST" action="/graph_request">
+        {{ form.csrf_token }}
+    <p>{{ form.expression.label }} {{ form.expression() }}</p>
     <p>
-        f(x)=<input type="text" name="expression" style="width:80%" required/>
-    </p>
-    <p>
-    From x=<input type="number" name="xmin" required/>
-        to x=<input type="number" name="xmax" required/>
+        {{ form.xmin.label }} {{ form.xmin() }}
+        {{ form.xmax.label }} {{ form.xmax() }}
     </p>
     <p>Options (Optional)</p>
     <table>
@@ -22,42 +19,24 @@
             <th> Properties</th>
         </tr>
         <tr>
-            <td> Title <input type="text" name="title"></td>
-            <td> Include grid? <input type="checkbox" name="isgrid" value="1"> </td>
+            <td> {{ form.title.label }} {{ form.title() }}</td>
+            <td> {{ form.isgrid.label }} {{ form.isgrid() }} </td>
         </tr>
         <tr>
-            <td> x label <input type="text" name="xlabel"></td>
-            <td> Line color:
-                <select name="linecolor">
-                    <option value="b">Blue</option>
-                    <option value="g">Green</option>
-                    <option value="r">Red</option>
-                    <option value="c">Cyan</option>
-                    <option value="m">Magenta</option>
-                    <option value="y">Yellow</option>
-                    <option value="k">Black</option>
-                    <option value="w">White</option>
-                </select>
-            </td>
+            <td> {{ form.xlabel.label }} {{ form.xlabel() }}</td>
+            <td> {{ form.linecolor.label }} {{ form.linecolor() }} </td>
         </tr>
         <tr>
-            <td> y label <input type="text" name="ylabel"></td>
-            <td> Line width: To be added</td>
+            <td> {{ form.ylabel.label }} {{ form.ylabel() }}</td>
+            <td> {{ form.linewidth.label }} {{ form.linewidth() }}</td>
         </tr>
         <tr>
             <td> </td>
-            <td> Line style
-                <select name="linestyle">
-                    <option value="-">Solid</option>
-                    <option value="--">Dashed</option>
-                    <option value="-.">Dashed-dot</option>
-                    <option value="..">Dotted</option>
-                </select>
-            </td>
+            <td> {{ form.linestyle.label }} {{ form.linestyle() }} </td>
         </tr>
     </table>
-    <p></p>
-    <input type="submit" name="submit" value="submit">
+    <p text-align="center;"></p>
+    {{ form.submit() }}
     <span id="result"></span>
     </form>
 </fieldset>
