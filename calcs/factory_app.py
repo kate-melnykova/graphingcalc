@@ -28,7 +28,7 @@ def factory_app():
 
     from model import db
     db.init_app(app)
-    migrate = Migrate(app, db)
+    Migrate(app, db, compare_type=True)
 
     celery = Celery(app.name)
     celery.set_default()

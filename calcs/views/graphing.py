@@ -7,6 +7,7 @@ from decimal import Decimal
 import math
 import os
 
+import numpy as np
 import matplotlib.pyplot as plt
 
 from views.parameters import *
@@ -40,24 +41,29 @@ def implementable_function(s: str):
     return func
 
 
-def plot_function(s: str, xmin: str, xmax: str, npoints=1000, raw_data={}):
-    xmin = float(xmin)
-    xmax = float(xmax)
-    assert npoints > 0
-    assert xmin < xmax # TODO: add to validators
-    func_val = []
-    s = rpn(s, function=True)
-    func = lambda var: compute_rpn([elem if elem != 'x' else Decimal(var) for elem in s])
-    stepsize = (xmax - xmin) / npoints
-    xvals = []
-    for i in range(npoints):
-        val = xmin + stepsize*i
-        xvals.append(val)
-        func_val.append(func(val))
-
+def plot_function(raw_data={}):
     # fig = plt.figure()
-    fig = SettingAxes.make_plot(raw_data)
-    SettingLine.plot(fig, func_val, xmin, xmax, raw_data)
+    # create initial plot figure
+    figsize_x = raw_data.get('figsize_x', 6)
+    figsize_y = raw_data.get('figsize_y', 6)
+    figsize = (6, 6)
+    try:
+        figsize_x = float(figsize_x)
+    except (ValueError, OverflowError):
+        pass
+    else:
+        figsize[0] = figsize_x
+
+    try:
+        figsize_y = float(figsize_y)
+    except (TypeError, ValueError, OverflowError):
+        pass
+    else:
+        figsize[1] = figsize_y
+
+    fig, ax = plt.subplots(figsize=figsize)
+    SettingAxes(fig, ax, raw_data)
+    SettingLine.plot(fig, ax, raw_data)
     #plt.plot(xvals, func_val, color=params['linecolor'])
 
     plt.savefig(os.getcwd() + filepath + 'plot.png')

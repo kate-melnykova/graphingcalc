@@ -15,8 +15,8 @@ from model import db, User
 from views.convert_to_rpn import rpn, preprocess
 from views.implement_rpn import compute_rpn
 from views.graphing import plot_function
-from redispy import get_connection
-from views.graphing_setting import default_plot_parameters
+# from redispy import get_connection
+# from views.graphing_setting import default_plot_parameters
 # from views.auth import User
 from views.auth.login_form import auth
 from views.exceptions import *
@@ -41,7 +41,7 @@ def load_user(user_id):
 def unauthorized():
     """Redirect unauthorized users to Login page."""
     flash('You must be logged in to view that page.')
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('auth.register'))
 
 
 app.register_blueprint(auth)
