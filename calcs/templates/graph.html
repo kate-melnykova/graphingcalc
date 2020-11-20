@@ -5,13 +5,48 @@
 <div>
 <fieldset>
     <legend>Enter figure parameters</legend>
-    <form id="graph" method="POST" action="/graph_request">
+    <form id="graph" method="POST" action="./">
         {{ form.csrf_token }}
-    <p>{{ form.expression.label }} {{ form.expression() }}</p>
-    <p>
-        {{ form.xmin.label }} {{ form.xmin() }}
-        {{ form.xmax.label }} {{ form.xmax() }}
-    </p>
+        <p>{{ form.expression1.label }} {{ form.expression1() }}</p>
+        <p>
+            {{ form.xmin1.label }} {{ form.xmin1() }}
+            {{ form.xmax1.label }} {{ form.xmax1() }}
+        </p>
+        <p> {{ form.label1.label }}{{ form.label1() }}
+            {{ form.linecolor1.label }} {{ form.linecolor1() }}
+            {{ form.linewidth1.label }} {{ form.linewidth1() }}
+            {{ form.linestyle1.label }} {{ form.linestyle1() }}
+        </p>
+        <br>
+
+        <p>{{ form.expression2.label }} {{ form.expression2() }}</p>
+        <p>
+            {{ form.xmin2.label }} {{ form.xmin2() }}
+            {{ form.xmax2.label }} {{ form.xmax2() }}
+        </p>
+        <p>
+            {{ form.label2.label }}{{ form.label2() }}
+            {{ form.linecolor2.label }} {{ form.linecolor2() }}
+            {{ form.linewidth2.label }} {{ form.linewidth2() }}
+            {{ form.linestyle2.label }} {{ form.linestyle2() }}
+        </p>
+        <br>
+        <p>
+            {{ form.expression3.label }} {{ form.expression3() }}
+        </p>
+        <p>
+            {{ form.xmin3.label }} {{ form.xmin3() }}
+            {{ form.xmax3.label }} {{ form.xmax3() }}
+        </p>
+        <p>
+            {{ form.label3.label }}{{ form.label3() }}
+            {{ form.linecolor3.label }} {{ form.linecolor3() }}
+            {{ form.linewidth3.label }} {{ form.linewidth3() }}
+            {{ form.linestyle3.label }} {{ form.linestyle3() }}
+        </p>
+
+
+
     <p>Options (Optional)</p>
     <table>
         <tr>
@@ -24,15 +59,15 @@
         </tr>
         <tr>
             <td> {{ form.xlabel.label }} {{ form.xlabel() }}</td>
-            <td> {{ form.linecolor.label }} {{ form.linecolor() }} </td>
+            <td>  </td>
         </tr>
         <tr>
             <td> {{ form.ylabel.label }} {{ form.ylabel() }}</td>
-            <td> {{ form.linewidth.label }} {{ form.linewidth() }}</td>
+            <td> </td>
         </tr>
         <tr>
             <td> </td>
-            <td> {{ form.linestyle.label }} {{ form.linestyle() }} </td>
+            <td>  </td>
         </tr>
     </table>
     <p text-align="center;"></p>

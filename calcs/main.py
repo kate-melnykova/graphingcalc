@@ -71,20 +71,18 @@ def schedule_calculation():
 
 @app.route('/graph_request', methods=['GET', 'POST'])
 def graph_request():
-    expression = request.args.get('expression')
-    # add try-except
-    xmin = float(request.args.get('xmin'))
-    xmax = float(request.args.get('xmax'))
-
-    filename = 'plot.png'
-    plot_function(expression, xmin, xmax, raw_data=request.args)
-    print(os.getcwd() + '/media/' + filename)
-    return send_file(os.getcwd() + '/media/' + filename, as_attachment=False)
+    filename = plot_function(raw_data=request.args)
+    return send_file(filename, as_attachment=False)
 
 
-@app.route('/graph')
+@app.route('/graph', methods=['GET', 'POST'])
 def graph():
-    return render_template('graph.html', form=GraphingForm())
+    if request.method == 'GET':
+        return render_template('graph.html', form=GraphingForm())
+
+    else:
+        filename = plot_function(raw_data=request.args)
+        return send_file(filename, as_attachment=False)
 
 
 @app.route('/settings')

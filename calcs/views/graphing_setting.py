@@ -1,11 +1,38 @@
 from decimal import Decimal
+import os
 
 from matplotlib import pyplot as plt
 import numpy as np
+from uuid import uuid4
 
 from views.exceptions import *
 from views.convert_to_rpn import rpn
 from views.implement_rpn import compute_rpn
+
+
+def create_plot(raw_data, filepath):
+    figsize = [6, 6]
+    try:
+        figsize[0] = float(raw_data.get('figsize_x', 6))
+    except (TypeError, ValueError, OverflowError):
+        pass
+
+    try:
+        figsize[1] = float(raw_data.get('figsize_y', 6))
+    except (TypeError, ValueError, OverflowError):
+        pass
+
+    warnings = list()
+    fig, ax = plt.subplots(figsize=tuple(figsize))
+    axes = SettingAxes(fig, ax, raw_data)
+    warnings += axes.warnings
+
+    lines = SettingLine(fig, ax, raw_data)
+    warnings += lines.warnings
+
+    filename = os.getcwd() + filepath + 'plot' + '.png'
+    plt.savefig(filename)
+    return filename
 
 
 class SettingAxes:
@@ -16,11 +43,11 @@ class SettingAxes:
         'ylabel': None
     }
 
-    def __init__(self, fig, ax, row_data, settings={}):
+    def __init__(self, fig, ax, raw_data, settings={}):
         self.fig = fig
         self.ax = ax
         self.default.update(settings)
-        self.row_data = row_data
+        self.raw_data = raw_data
         self.warnings = list()
         self.plot_xlabel()
         self.plot_ylabel()
@@ -34,7 +61,7 @@ class SettingAxes:
         if self.raw_data.get('ylabel', None) is not None:
             self.ax.set_ylabel(self.raw_data['ylabel'])
 
-    def plot_title(self, fig):
+    def plot_title(self):
         if self.raw_data.get('title', None) is None:
             self.fig.suptitle(self.raw_data['title'])
 
@@ -57,24 +84,28 @@ class SettingLine:
         self.raw_data = raw_data
         self.default.update(settings)
         self.warnings = list()
-        x_vals, y_vals = self.get_coords()
-        linewidth = self.get_linewidth()
-        style = self.get_linewidth()
-        self.ax.plot(x_vals, y_vals, linewidth=linewidth, style=style)
+        for i in range(1, 4):
+            try:
+                x_vals, y_vals = self.get_coords(i)
+            except:
+                break
+            linewidth = self.get_linewidth(i)
+            linestyle = self.get_linestyle(i)
+            self.ax.plot(x_vals, y_vals, linewidth=linewidth, linestyle=linestyle)
 
-    def get_linewidth(self):
+    def get_linewidth(self, i: int):
         try:
-            linewidth = float(self.raw_data.get('linewidth', None))
+            linewidth = float(self.raw_data.get(f'linewidth{i}', None))
         except (TypeError, ValueError, OverflowError):
-            linewidth = self.default['linewidth']
+            linewidth = self.default[f'linewidth{i}']
 
         if linewidth <= 0:
             self.warnings.append(f'The linewidth is not positive: {linewidth}. Resetting to the default value {self.default["linewidth"]}')
             linewidth = 2.0
         return linewidth
 
-    def get_linestyle(self):
-        style = self.raw_data['linestyle']
+    def get_linestyle(self, i: int):
+        style = self.raw_data[f'linestyle{i}']
         if style not in ['-', '--', '-.', '.']:
             self.warnings.append(f'Linestyle: incorrect entry: {style}')
             return self.default['style']
@@ -82,12 +113,15 @@ class SettingLine:
         else:
             return style
 
-    def get_coords(self):
+    def get_coords(self, i: int):
+        s = self.raw_data[f'expression{i}']
+        if not s:
+            raise
+
         # covert the function to the array of values
-        x_min = float(self.raw_data['xmin'])
-        x_max = float(self.raw_data['xmax'])
-        s = self.raw_data['expression']
-        n_points = int(self.raw_data.get('n_points', self.default['n_points']))
+        x_min = float(self.raw_data[f'xmin{i}'])
+        x_max = float(self.raw_data[f'xmax{i}'])
+        n_points = int(self.raw_data.get(f'n_points{i}', self.default['n_points']))
         assert x_min < x_max  # TODO: add to validators
         s = rpn(s, function=True)
 
