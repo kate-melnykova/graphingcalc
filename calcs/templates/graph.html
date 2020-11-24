@@ -12,11 +12,15 @@
             {{ form.xmin1.label }} {{ form.xmin1() }}
             {{ form.xmax1.label }} {{ form.xmax1() }}
         </p>
-        <p> {{ form.label1.label }}{{ form.label1() }}
+        <p>
+            {{ form.label1.label }}{{ form.label1() }}
+            {{ form.include_in_legend1.label }}{{ form.include_in_legend1() }}</p>
+        <p>
             {{ form.linecolor1.label }} {{ form.linecolor1() }}
             {{ form.linewidth1.label }} {{ form.linewidth1() }}
             {{ form.linestyle1.label }} {{ form.linestyle1() }}
         </p>
+        <p> {{ form.scatterplot1.label }}{{ form.scatterplot1() }}</p>
         <br>
 
         <p>{{ form.expression2.label }} {{ form.expression2() }}</p>
@@ -26,6 +30,9 @@
         </p>
         <p>
             {{ form.label2.label }}{{ form.label2() }}
+            {{ form.include_in_legend2.label }}{{ form.include_in_legend2() }}
+        </p>
+        <p>
             {{ form.linecolor2.label }} {{ form.linecolor2() }}
             {{ form.linewidth2.label }} {{ form.linewidth2() }}
             {{ form.linestyle2.label }} {{ form.linestyle2() }}
@@ -40,6 +47,9 @@
         </p>
         <p>
             {{ form.label3.label }}{{ form.label3() }}
+            {{ form.include_in_legend3.label }}{{ form.include_in_legend3() }}
+        </p>
+        <p>
             {{ form.linecolor3.label }} {{ form.linecolor3() }}
             {{ form.linewidth3.label }} {{ form.linewidth3() }}
             {{ form.linestyle3.label }} {{ form.linestyle3() }}

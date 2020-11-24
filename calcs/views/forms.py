@@ -32,6 +32,7 @@ class GraphingForm(FlaskForm):
     xmin1 = FloatField('From x=', [validators.Length(min=6, max=35)])
     xmax1 = FloatField('To x=', [validators.Length(min=6, max=35)])
     label1 = StringField('Label')
+    include_in_legend1 = BooleanField('Include in legend', default=True)
     linecolor1 = SelectField('Line color', choices=[
         ('b', 'Blue'),
         ('g', 'Green'),
@@ -41,11 +42,13 @@ class GraphingForm(FlaskForm):
         ('y', 'Yellow'),
         ('k', 'Black'),
         ('w', 'White')
-    ])
+    ], default=['b'])
     linewidth1 = FloatField('Line width',
                            default=2.0,
                            validators=[validators.NumberRange(min=0.0,
                                                               message='Line width must be positive')])
+    # markersize = SelectField()
+    scatterplot1 = BooleanField('Scatterplot?')
 
     linestyle1 = SelectField('Line style', default='-', choices=[
         ('-', 'Solid'),
@@ -60,6 +63,7 @@ class GraphingForm(FlaskForm):
     xmin2 = FloatField('From x=', [validators.Length(min=6, max=35)])
     xmax2 = FloatField('To x=', [validators.Length(min=6, max=35)])
     label2 = StringField('Label')
+    include_in_legend2 = BooleanField('Include in legend', default=True)
     linecolor2 = SelectField('Line color', choices=[
         ('b', 'Blue'),
         ('g', 'Green'),
@@ -69,7 +73,7 @@ class GraphingForm(FlaskForm):
         ('y', 'Yellow'),
         ('k', 'Black'),
         ('w', 'White')
-    ])
+    ], default='r')
     linewidth2 = FloatField('Line width',
                            default=2.0,
                            validators=[validators.NumberRange(min=0.0,
@@ -81,6 +85,7 @@ class GraphingForm(FlaskForm):
         ('-.', 'Dashed-dot'),
         ('.', 'Dotted')
     ])
+    scatterplot2 = BooleanField('Scatterplot?')
 
     expression3 = StringField('f(x)=',
                               validators=[validators.Length(min=1, max=100)],
@@ -88,6 +93,7 @@ class GraphingForm(FlaskForm):
     xmin3 = FloatField('From x=', [validators.Length(min=6, max=35)])
     xmax3 = FloatField('To x=', [validators.Length(min=6, max=35)])
     label3 = StringField('Label')
+    include_in_legend3 = BooleanField('Include in legend', default=True)
     linecolor3 = SelectField('Line color', choices=[
         ('b', 'Blue'),
         ('g', 'Green'),
@@ -97,7 +103,7 @@ class GraphingForm(FlaskForm):
         ('y', 'Yellow'),
         ('k', 'Black'),
         ('w', 'White')
-    ])
+    ], default='c')
     linewidth3 = FloatField('Line width',
                            default=2.0,
                            validators=[validators.NumberRange(min=0.0,
@@ -109,6 +115,7 @@ class GraphingForm(FlaskForm):
         ('-.', 'Dashed-dot'),
         ('.', 'Dotted')
     ])
+    scatterplot3 = BooleanField('Scatterplot?')
 
     title = StringField('Title')
     xlabel = StringField('x label')
