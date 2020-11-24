@@ -125,7 +125,8 @@ class GraphingForm(FlaskForm):
     title = StringField('Title')
     xlabel = StringField('x label')
     ylabel = StringField('y label')
-    isgrid = BooleanField(false_values=False)
+    isgrid = BooleanField('Grid?', false_values=False)
+    legend = BooleanField('Legend?')
     submit = SubmitField()
 
     def validate(self):

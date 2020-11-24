@@ -24,11 +24,11 @@ def create_plot(raw_data, filepath):
 
     warnings = list()
     fig, ax = plt.subplots(figsize=tuple(figsize))
-    axes = SettingAxes(fig, ax, raw_data)
-    warnings += axes.warnings
-
     lines = SettingLine(fig, ax, raw_data)
     warnings += lines.warnings
+
+    axes = SettingAxes(fig, ax, raw_data)
+    warnings += axes.warnings
 
     filename = os.getcwd() + filepath + 'plot' + '.png'
     plt.savefig(filename)
@@ -52,6 +52,7 @@ class SettingAxes:
         self.plot_xlabel()
         self.plot_ylabel()
         self.plot_title()
+        self.plot_grid()
         self.fig.tight_layout()
         self.fig.subplots_adjust(top=0.88)
 
@@ -66,6 +67,14 @@ class SettingAxes:
     def plot_title(self):
         if self.raw_data.get('title', None) is not None:
             self.fig.suptitle(self.raw_data['title'])
+
+    def plot_grid(self):
+        if self.raw_data.get('isgrid'):
+            self.ax.grid()
+
+    def plot_legend(self):
+        if self.raw_data.get('legend'):
+            self.ax.legend()
 
 
 class SettingLine:
