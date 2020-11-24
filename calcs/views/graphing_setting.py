@@ -52,6 +52,8 @@ class SettingAxes:
         self.plot_xlabel()
         self.plot_ylabel()
         self.plot_title()
+        self.fig.tight_layout()
+        self.fig.subplots_adjust(top=0.88)
 
     def plot_xlabel(self):
         if self.raw_data.get('xlabel', None) is not None:
@@ -62,7 +64,7 @@ class SettingAxes:
             self.ax.set_ylabel(self.raw_data['ylabel'])
 
     def plot_title(self):
-        if self.raw_data.get('title', None) is None:
+        if self.raw_data.get('title', None) is not None:
             self.fig.suptitle(self.raw_data['title'])
 
 
@@ -91,7 +93,15 @@ class SettingLine:
                 break
             linewidth = self.get_linewidth(i)
             linestyle = self.get_linestyle(i)
-            self.ax.plot(x_vals, y_vals, linewidth=linewidth, linestyle=linestyle)
+            linecolor = self.get_linecolor(i)
+            if self.raw_data.get(f'scatterplot{i}'):
+                self.ax.scatter(x_vals, y_vals,
+                                color=linecolor)
+            else:
+                self.ax.plot(x_vals, y_vals,
+                             linewidth=linewidth,
+                             linestyle=linestyle,
+                             color=linecolor)
 
     def get_linewidth(self, i: int):
         try:
@@ -112,6 +122,12 @@ class SettingLine:
 
         else:
             return style
+
+    def get_linecolor(self, i: int):
+        return self.raw_data.get(f'linecolor{i}', 'blue')
+
+    def get_n_points(self, i: int):
+        return self.raw_data.get('n_points{i}', self.default['n_points'])
 
     def get_coords(self, i: int):
         s = self.raw_data[f'expression{i}']

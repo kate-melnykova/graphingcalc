@@ -9,7 +9,7 @@ from flask import url_for
 from flask_login import login_user, login_required, logout_user #, current_user
 # from redis import Redis
 from flask_wtf import FlaskForm
-from wtforms import StringField, DecimalField, BooleanField, FloatField
+from wtforms import StringField, DecimalField, BooleanField, FloatField, IntegerField
 from wtforms import PasswordField, SubmitField, SelectField
 from wtforms import validators
 
@@ -47,8 +47,9 @@ class GraphingForm(FlaskForm):
                            default=2.0,
                            validators=[validators.NumberRange(min=0.0,
                                                               message='Line width must be positive')])
-    # markersize = SelectField()
+    markersize1 = FloatField('MarkerSize', default=2.0)
     scatterplot1 = BooleanField('Scatterplot?')
+    n_points1 = IntegerField('Number of points', default=1000)
 
     linestyle1 = SelectField('Line style', default='-', choices=[
         ('-', 'Solid'),
@@ -86,6 +87,8 @@ class GraphingForm(FlaskForm):
         ('.', 'Dotted')
     ])
     scatterplot2 = BooleanField('Scatterplot?')
+    markersize2 = FloatField('MarkerSize', default=2.0)
+    n_points2 = IntegerField('Number of points', default=1000)
 
     expression3 = StringField('f(x)=',
                               validators=[validators.Length(min=1, max=100)],
@@ -116,6 +119,8 @@ class GraphingForm(FlaskForm):
         ('.', 'Dotted')
     ])
     scatterplot3 = BooleanField('Scatterplot?')
+    n_points3 = IntegerField('Number of points', default=1000)
+    markersize3 = FloatField('MarkerSize', default=2.0)
 
     title = StringField('Title')
     xlabel = StringField('x label')
