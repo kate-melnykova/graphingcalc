@@ -12,6 +12,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, BooleanField, FloatField, IntegerField
 from wtforms import PasswordField, SubmitField, SelectField
 from wtforms import validators
+from wtforms.widgets.html5 import RangeInput, NumberInput
 
 # from views.auth import User
 from model import db, User
@@ -57,6 +58,9 @@ class GraphingForm(FlaskForm):
         ('-.', 'Dashed-dot'),
         ('.', 'Dotted')
     ])
+    noise1 = IntegerField('Noise level in %',
+                          default=0,
+                          widget=RangeInput(step=5))
 
     expression2 = StringField('f(x)=',
                               validators=[validators.Length(min=1, max=100)],
@@ -89,6 +93,9 @@ class GraphingForm(FlaskForm):
     scatterplot2 = BooleanField('Scatterplot?')
     markersize2 = FloatField('MarkerSize', default=2.0)
     n_points2 = IntegerField('Number of points', default=1000)
+    noise2 = IntegerField('Noise level in %',
+                          default=0,
+                          widget=RangeInput(step=5))
 
     expression3 = StringField('f(x)=',
                               validators=[validators.Length(min=1, max=100)],
@@ -121,6 +128,9 @@ class GraphingForm(FlaskForm):
     scatterplot3 = BooleanField('Scatterplot?')
     n_points3 = IntegerField('Number of points', default=1000)
     markersize3 = FloatField('MarkerSize', default=2.0)
+    noise3 = IntegerField('Noise level in %',
+                          default=0,
+                          widget=RangeInput(step=5))
 
     title = StringField('Title')
     xlabel = StringField('x label')

@@ -1,9 +1,10 @@
 from decimal import Decimal
 import os
+import math
 
 from matplotlib import pyplot as plt
 import numpy as np
-from uuid import uuid4
+from numpy.random import randn
 
 from views.exceptions import *
 from views.convert_to_rpn import rpn
@@ -147,12 +148,17 @@ class SettingLine:
         x_min = float(self.raw_data[f'xmin{i}'])
         x_max = float(self.raw_data[f'xmax{i}'])
         n_points = int(self.raw_data.get(f'n_points{i}', self.default['n_points']))
-        assert x_min < x_max  # TODO: add to validators
         s = rpn(s, function=True)
 
         func = lambda var: compute_rpn([elem if elem != 'x' else Decimal(var) for elem in s])
         x_vals = np.linspace(x_min, x_max, n_points)
         y_vals = [func(val) for val in x_vals]
+
+        noise = float(self.raw_data.get(f'noise{i}', 0))
+        if noise:
+            std = Decimal(math.sqrt((max(y_vals) - min(y_vals)) * Decimal(noise) / 100))
+            nnoise = [Decimal(x) for x in randn(len(y_vals))]
+            y_vals = [y + std * n for y, n in zip(y_vals, nnoise)]
         return x_vals, y_vals
 
 

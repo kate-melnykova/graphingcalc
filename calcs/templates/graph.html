@@ -5,7 +5,7 @@
 <div>
 <fieldset>
     <legend>Enter figure parameters</legend>
-    <form id="graph" method="POST" action="./">
+    <form id="graph" method="POST" action=".">
         {{ form.csrf_token }}
         <p>{{ form.expression1.label }} {{ form.expression1() }}</p>
         <p>
@@ -23,6 +23,16 @@
         <p>
             {{ form.scatterplot1.label }}{{ form.scatterplot1() }}
             {{ form.n_points1.label }}{{ form.n_points1() }}
+        </p>
+        <p>
+            {{ form.noise1.label }}
+            <!--
+            <input id="rangeInput" type="range" min="0" max="200" oninput="amount.value=rangeInput.value" />
+            <input id="amount" type="number" value="100" min="0" max="200" oninput="rangeInput.value=amount.value" />
+            <output for="age" id="selected-age"> form.age.data </output>
+            form.noise1_number()
+            -->
+            {{ form.noise1(min=0, max=100, style="text-width:80%") }}
         </p>
         <br>
 
@@ -44,6 +54,10 @@
             {{ form.scatterplot2.label }}{{ form.scatterplot2() }}
             {{ form.n_points2.label }}{{ form.n_points2() }}
         </p>
+        <p>
+            {{ form.noise2.label }}
+            {{ form.noise2(min=0, max=100, style="text-width:80%") }}
+        </p>
         <br>
         <p>
             {{ form.expression3.label }} {{ form.expression3() }}
@@ -63,7 +77,11 @@
         </p>
         <p>
             {{ form.scatterplot3.label }}{{ form.scatterplot3() }}
-            {{ form.n_points1.label }}{{ form.n_points1() }}
+            {{ form.n_points3.label }}{{ form.n_points3() }}
+        </p>
+        <p>
+            {{ form.noise3.label }}
+            {{ form.noise3(min=0, max=100, style="text-width:80%") }}
         </p>
 
 
