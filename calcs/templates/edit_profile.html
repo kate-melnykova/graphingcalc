@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+
+{% block main %}
+    <h1>
+    Update the profile
+    </h1>
+    <fieldset>
+        <form action={{ url_for('auth.edit_profile') }} method="POST">
+            {{ form.csrf_token }}
+            <p>{{ form.username.label }} {{ form.username }}</p>
+            <p>{{ form.email.label }} {{ form.email }}</p>
+            <p>{{ form.prev_password.label }}{{ form.prev_password }}</p>
+            <p>{{ form.password.label }}{{ form.password }}</p>
+            <p>{{ form.confirm.label }}{{ form.confirm }}</p>
+            <p>{{ form.submit }}</p>
+        </form>
+    </fieldset>
+    </h1>
+{% endblock %}

@@ -54,6 +54,10 @@ def index():
         return render_template('index.html',
                                form=ComputeForm())
 
+    return render_template('index.html',
+                           form=ComputeForm())
+
+
 
 @app.route('/schedule_calculation', methods=['POST'])
 def schedule_calculation():
@@ -83,7 +87,13 @@ def graph_request():
     return send_file(filename, as_attachment=False)
 
 
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html')
+
+
 @app.route('/settings')
 @login_required
 def settings():
-    return render_template('settings.html')
+    return render_template('edit_profile.html')

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    Hello {{ current_user.username }}
+    <div>
+        <p>
+            <table>
+                <tr>
+                    <td> Username </td>
+                    <td> {{ current_user.username }} </td>
+                </tr>
+                <tr>
+                    <td> Email </td>
+                    <td> {{ current_user.email }} </td>
+                </tr>
+            </table>
+            <input type="button" onclick="location.href='/edit_profile';" value="Edit?" />
+        </p>
+        <p>
+            Password change (to be added)
+        </p>
+    </div>
+    <div>
+        Your settings:
+        <p>
+            <table>
+            <tr>
+                <th>
+                    Parameter
+                </th>
+                <th>
+                    Default value
+                </th>
+            </tr>
+            <tr>
+                    <td>
+                        Line color (circulate over these colors)
+                    </td>
+                    <td>
+                        ...
+                    </td>
+            </tr>
+            <tr>
+                <td>
+                    Line width
+                </td>
+                <td>
+                    2.0
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Line style (circulate over these colors)
+                </td>
+                <td>
+                    ...
+                </td>
+            </tr>
+    </table>
+        </p>
+    </div>
+{% endblock %}
