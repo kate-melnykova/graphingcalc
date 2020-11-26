@@ -73,15 +73,12 @@ def schedule_calculation():
     return jsonify({'val': str(val), 'expression': expression}), 200
 
 
-@app.route('/graph', methods=['GET', 'POST'])
+@app.route('/graph')
 def graph():
-    if request.method == 'GET':
-        return render_template('graph.html', form=GraphingForm())
-
     return render_template('graph.html', form=GraphingForm())
 
 
-@app.route('/graph_request', methods=['GET', 'POST'])
+@app.route('/graph_request')
 def graph_request():
     filename = plot_function(raw_data=request.args)
     return send_file(filename, as_attachment=False)

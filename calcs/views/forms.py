@@ -60,7 +60,8 @@ class GraphingForm(FlaskForm):
     ])
     noise1 = IntegerField('Noise level in %',
                           default=0,
-                          widget=RangeInput(step=5))
+                          widget=RangeInput(step=5),
+                          render_kw={'style': 'width:40%; display:inline-block'})
 
     expression2 = StringField('f(x)=',
                               validators=[validators.Length(min=1, max=100)],

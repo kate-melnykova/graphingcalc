@@ -8,16 +8,12 @@ from flask import request
 from flask import url_for
 from flask_login import login_user, login_required,\
     logout_user, current_user
-# from redis import Redis
 from flask_wtf import FlaskForm
 from wtforms import StringField
 from wtforms import PasswordField, SubmitField
 from wtforms import validators, ValidationError
 
-# from views.auth import User
 from model import db, User
-# from redispy import get_connection
-
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', [validators.Length(min=4, max=25)])
