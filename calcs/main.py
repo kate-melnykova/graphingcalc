@@ -78,10 +78,17 @@ def graph():
     return render_template('graph.html', form=GraphingForm())
 
 
-@app.route('/graph_request')
+@app.route('/graph_request', methods=['GET', 'POST'])
 def graph_request():
+    print(f'got data: {request.data}')
+    print(f'form fields: {request.form}')
     filename = plot_function(raw_data=request.args)
     return send_file(filename, as_attachment=False)
+
+@app.route('/get_figure')
+def get_figure():
+    filename = request.args.get('filename', 'plot.png')
+    return send_file(...) # TODO
 
 
 @app.route('/profile')
