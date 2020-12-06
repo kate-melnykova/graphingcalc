@@ -31,9 +31,10 @@ def create_plot(raw_data, filepath):
     axes = SettingAxes(fig, ax, raw_data)
     warnings += axes.warnings
 
-    filename = os.getcwd() + filepath + 'plot' + '.png'
-    plt.savefig(filename)
-    return filename
+    #filename = os.getcwd() + filepath + 'plot' + '.png'
+    #plt.savefig(filename)
+    #return filename
+    return fig
 
 
 class SettingAxes:

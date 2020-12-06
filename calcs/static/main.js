@@ -65,17 +65,23 @@ $(document).ready(function() {
 
     $('#plot').click(function (e){
         e.preventDefault();
-        alert('!')
-        // collect the data across forms
-        // add info about axes
-        // send post request with all the data
         var that = $(this);
-        var temp = $("#graph").serializeArray();
-
+        var axesData = {};
+        var value;
+        for (value of $("#graph").serializeArray()) {
+            axesData[value.name] = value.value;
+        };
+        for (value in axesData){
+            console.log(value, axesData[value]);
+        }
+        console.log(axesData);
         var lines = new Array();
         $(".graph-form").each(function(index){
-            var lineData = $(this)
-            lines.push($(this).serializeArray());
+            var temp = {};
+            for (value of $(this).serializeArray()) {
+                temp[value.name] = value.value;
+            };
+            lines.push(temp);
         });
         var data = {
             axesData: axesData,
@@ -83,25 +89,29 @@ $(document).ready(function() {
         }
         // make POST request with `formsData` encoded as JSON
         var data = JSON.stringify(data);
-        /*
+
         $.ajax({
             type: 'POST',
-            url: that.attr('action'),
+            url: 'http://0.0.0.0:5000/graph_request',
+            dataType: "text",
+            contentType: "application/json",
             data: data
         })
 
-            .done(function (filename) {
+            .done(function (image_base64) {
+                alert('Receieved image');
+                var image = new Image();
+                image.src = 'data:image/png;base64,' + image_base64;
                 $('#graph-container').empty();
-                $('<img>', {src:"http://0.0.0.0:5000/figure?"+filename}).appendTo('#graph-container');
+                $('#graph-container').append(image);
             })
 
-            .fail(function (jqXHR, data, arg3) {
-                $('#result').html(jqXHR.responseJSON.error);
-                console.log(data);
-                console.log(arg3);
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                alert(`Did not recieve file`)
+                //$('#result').html(jqXHR.responseJSON.error);
+                console.log(textStatus);
+                console.log(errorThrown);
             });
-
-         */
         return false
     });
 

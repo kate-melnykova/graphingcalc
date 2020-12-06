@@ -20,6 +20,7 @@ from views.graphing import plot_function
 # from views.auth import User
 from views.auth.login_form import auth
 from views.exceptions import *
+from views.image_converter import ImageConverter
 
 app, celery = factory_app()
 
@@ -80,10 +81,13 @@ def graph():
 
 @app.route('/graph_request', methods=['GET', 'POST'])
 def graph_request():
-    print(f'got data: {request.data}')
-    print(f'form fields: {request.form}')
-    filename = plot_function(raw_data=request.args)
-    return send_file(filename, as_attachment=False)
+    print(f'JSON content: {request.get_json()}')
+    raw_data = request.get_json()
+    fig = plot_function(raw_data=raw_data)
+    # return send_file(filename, as_attachment=False)
+    return ImageConverter().img_to_base64(fig)
+
+
 
 @app.route('/get_figure')
 def get_figure():
