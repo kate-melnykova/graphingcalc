@@ -42,7 +42,7 @@ def implementable_function(s: str):
 
 
 def plot_function(raw_data={}):
-    return create_plot(raw_data, filepath)
+    return create_plot(raw_data)
 
 
 

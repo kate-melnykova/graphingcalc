@@ -33,7 +33,7 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    print(user_id)
+    print(f'user_id is {user_id}')
     """Check if user is logged-in on every page load."""
     return None if user_id is None else User.query.get(user_id)
 
@@ -86,7 +86,6 @@ def graph_request():
     fig = plot_function(raw_data=raw_data)
     # return send_file(filename, as_attachment=False)
     return ImageConverter().img_to_base64(fig)
-
 
 
 @app.route('/get_figure')

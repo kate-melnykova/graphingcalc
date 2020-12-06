@@ -9,7 +9,6 @@ class ImageConverter:
         fig.savefig(buf, format="png")
         # Embed the result in the html output.
         s = base64.b64encode(buf.getbuffer()).decode("ascii")
-        print(f'Encoded image is {s}')
         return s
 
     def base64_to_img(self, encoded):
