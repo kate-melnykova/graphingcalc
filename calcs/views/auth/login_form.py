@@ -66,7 +66,24 @@ auth = Blueprint('auth', __name__)
 def register():
     regform = RegistrationForm(request.form)
     loginform = LoginForm(request.form)
-    return render_template('login.html', regform=regform, loginform=loginform)
+    return render_template('login.html',
+                           regform=regform,
+                           loginform=loginform)
+
+
+@auth.route('/login2')
+def login2():
+    loginform = LoginForm(request.form)
+    return render_template('login2.html',
+                           loginform=loginform)
+
+
+@auth.route('/register2')
+def register2():
+    regform = RegistrationForm(request.form)
+    return render_template('register2.html',
+                           regform=regform)
+
 
 
 @auth.route('/registration/process', methods=['POST'])

@@ -27,6 +27,7 @@ class ComputeForm(FlaskForm):
 
 
 class GraphingForm(FlaskForm):
+    """
     expression1 = StringField('f(x)=',
                              validators=[validators.Length(min=1, max=100)],
                              render_kw={'style': 'width:80%;'})
@@ -132,10 +133,10 @@ class GraphingForm(FlaskForm):
     noise3 = IntegerField('Noise level in %',
                           default=0,
                           widget=RangeInput(step=5))
-
-    title = StringField('Title')
-    xlabel = StringField('x label')
-    ylabel = StringField('y label')
+    """
+    title = StringField('Title', render_kw={'style': 'width:90%;'})
+    xlabel = StringField('x label', render_kw={'style': 'width:90%;'})
+    ylabel = StringField('y label', render_kw={'style': 'width:90%;'})
     isgrid = BooleanField('Grid?', false_values=False)
     legend = BooleanField('Legend?')
     submit = SubmitField()

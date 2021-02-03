@@ -79,6 +79,11 @@ def graph():
     return render_template('graph.html', form=GraphingForm())
 
 
+@app.route('/define_graph')
+def define_graph():
+    return render_template('define_graph.html', form=GraphingForm())
+
+
 @app.route('/graph_request', methods=['GET', 'POST'])
 def graph_request():
     print(f'JSON content: {request.get_json()}')
