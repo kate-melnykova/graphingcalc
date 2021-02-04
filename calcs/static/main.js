@@ -1,8 +1,10 @@
 $(document).ready(function() {
-    window.counter = 1;
+    window.counter = 0;
     window.template = Handlebars.compile($("#element-template").text());
     
     $('form#calc').submit(function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
         var that = $(this);
         $.ajax({
             type: 'POST',
@@ -35,12 +37,12 @@ $(document).ready(function() {
                 console.log(data);
                 console.log(arg3);
             });
-
-        e.preventDefault();
+        return false
     });
 
     $('#add_line').click(function (e){
         e.preventDefault();
+        e.stopImmediatePropagation();
         $("div#line_forms").append(window.template({count: window.counter++}));
         console.log('Added a new form line_' + window.counter);
         return false
@@ -49,6 +51,7 @@ $(document).ready(function() {
     $(document).on("click", ".remove", function (e)
     {
         e.preventDefault();
+        e.stopImmediatePropagation();
         var elementId = $(this).data('element-id');
         $(`#${elementId}`).remove();
         return false
@@ -56,15 +59,18 @@ $(document).ready(function() {
 
 
     $('form#graph').submit(function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
         var queryString = $(this).serialize();
         $('#graph-container').empty();
         $('<img>', {src:"http://0.0.0.0:5000/graph_request?"+queryString}).appendTo('#graph-container');
 
-        e.preventDefault();
+        return false
     });
 
     $('#plot').click(function (e){
         e.preventDefault();
+        e.stopImmediatePropagation();
         var that = $(this);
         var axesData = {};
         var value;

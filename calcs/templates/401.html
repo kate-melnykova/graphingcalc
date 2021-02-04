@@ -1,9 +1,25 @@
-{% extends 'base.html' %}
-
-{% block title %}Scientific computations{% endblock %}
+{% extends 'base2.html' %}
 
 {% block content %}
 
 <h2> Error 401: Unauthorized access. Please make sure that you are logged in. </h2>
+<!-- Begin Page Content -->
+    <div class="container-fluid">
 
+        <!-- 404 Error Text -->
+        <div class="text-center">
+            <div class="error mx-auto" data-text="401">401</div>
+            <p class="lead text-gray-800 mb-5">Unauthorized access</p>
+            <p class="text-gray-500 mb-0">It looks like you are not logged in...</p>
+            <div class="text-center">
+                <a class="small" href="{{ url_for('auth.register') }}">Create an Account!</a>
+            </div>
+            <div class="text-center">
+                <a class="small" href="{{ url_for('auth.login') }}">Already have an account? Login!</a>
+            </div>
+            <a href="{{ url_for('index') }}">&larr; Back to Dashboard</a>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
 {% endblock %}

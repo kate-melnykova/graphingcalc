@@ -1,28 +1,45 @@
-{% extends 'base.html' %}
+{% extends 'base2.html' %}
 
-{% block title %}Scientific computations{% endblock %}
+{% block content %}
+    <div class="container-fluid" style="align-content: center;">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 align="center">Online calculator</h1>
+        </div>
+        <div class="row">
+            <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4 border-left-primary shadow h-100 py-2">
+        <form id="calc" class="row" action="./schedule_calculation" method="POST">
+            <div class="card-body">
+            <p>{{ form.expression.label }}</p>
+            <p> {{ form.expression() }}</p>
+            <p> {{ form.submit() }}</p>
+            <span id="result"></span>
+            </div>
+        </form>
+            </div>
+            </div>
+        </div>
 
-{% block main %}
-    <div>
-<h1 id="history" align="center">Online calculator</h1>
-
-<fieldset>
-    <form id="calc" action="./schedule_calculation" method="POST">
-        <p>{{ form.expression.label }}</p>
-        <p> {{ form.expression() }}</p>
-        <p> {{ form.submit() }}</p>
-        <span id="result"></span>
-
-    </form>
-</fieldset>
-{% endblock %}
-
-{% block history %}
-<h1> History </h1>
-<fieldset>
-    <legend> Last 10 calculations </legend>
-    <div id="container"></div>
-</fieldset>
+            <hr>
+        <div class="row">
+            <br>
+            <div class="row">
+                <div class="col-xl-8 col-lg-7">
+                    <div class="card shadow mb-4 border-left-primary shadow h-100 py-2">
+                        <div class="row no-gutters align-items-center">
+                            <div class="card-body">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    History
+                                </div>
+                                <div id="container">
+                                    <!-- history will be added -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 

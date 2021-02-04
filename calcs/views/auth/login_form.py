@@ -60,7 +60,7 @@ def generate_error_message(form_errors):
 
 auth = Blueprint('auth', __name__)
 
-
+"""
 @auth.route('/login')
 @auth.route('/register')
 def register():
@@ -69,17 +69,18 @@ def register():
     return render_template('login.html',
                            regform=regform,
                            loginform=loginform)
+"""
 
 
-@auth.route('/login2')
-def login2():
+@auth.route('/login')
+def login():
     loginform = LoginForm(request.form)
     return render_template('login2.html',
                            loginform=loginform)
 
 
-@auth.route('/register2')
-def register2():
+@auth.route('/register')
+def register():
     regform = RegistrationForm(request.form)
     return render_template('register2.html',
                            regform=regform)
@@ -195,17 +196,10 @@ def edit_profile():
 @auth.route("/logout")
 @login_required
 def logout():
-    return render_template('logout.html')
+    logout_user()
+    flash('Successfully logged out')
+    return redirect(url_for('auth.login'))
 
-
-@auth.route('/logout/process', methods=['POST'])
-def logout_process():
-    if request.form['response'] == 'yes':
-        logout_user()
-        flash('Successfully logged out')
-        return redirect(url_for('auth.register'))
-    else:
-        return redirect(url_for('index'))
 
 
 

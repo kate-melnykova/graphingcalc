@@ -48,16 +48,14 @@ def unauthorized():
 app.register_blueprint(auth)
 
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
-def index():
+@app.route('/index2', methods=['GET', 'POST'])
+def index2():
     if request.method == 'GET':
         return render_template('index.html',
                                form=ComputeForm())
 
     return render_template('index.html',
                            form=ComputeForm())
-
 
 
 @app.route('/schedule_calculation', methods=['POST'])
@@ -79,8 +77,10 @@ def graph():
     return render_template('graph.html', form=GraphingForm())
 
 
+@app.route('/index')
 @app.route('/define_graph')
-def define_graph():
+@app.route('/')
+def index():
     return render_template('define_graph.html', form=GraphingForm())
 
 
