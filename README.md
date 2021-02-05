@@ -1,4 +1,4 @@
-# Graphic calculator
+# Graphing calculator
 
 Evaluates a formula with an arbitrary number of operations and plots the graph of a function.
 
