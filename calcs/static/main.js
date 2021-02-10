@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    window.counter = 0;
+    window.counter = 1;
     window.template = Handlebars.compile($("#element-template").text());
     
     $('form#calc').submit(function (e) {

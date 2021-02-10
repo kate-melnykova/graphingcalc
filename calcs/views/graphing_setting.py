@@ -30,8 +30,11 @@ def create_plot(raw_data):
     warnings = list()
     fig, ax = plt.subplots(figsize=tuple(figsize))
     for line in lines:
-        lines = SettingLine(fig, ax, line)
-        warnings += lines.warnings
+        try:
+            lines_ = SettingLine(fig, ax, line)
+        except:
+            warnings += 'Missing line details \n'
+        warnings += lines_.warnings
 
     axes = SettingAxes(fig, ax, axes_data)
     warnings += axes.warnings
@@ -39,6 +42,7 @@ def create_plot(raw_data):
     #filename = os.getcwd() + filepath + 'plot' + '.png'
     #plt.savefig(filename)
     #return filename
+    fig.tight_layout()
     return fig
 
 
@@ -60,6 +64,7 @@ class SettingAxes:
         self.plot_ylabel()
         self.plot_title()
         self.plot_grid()
+        # self.plot_legend()
         self.fig.tight_layout()
         self.fig.subplots_adjust(top=0.88)
 
